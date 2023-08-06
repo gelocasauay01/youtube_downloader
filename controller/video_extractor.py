@@ -6,5 +6,10 @@ class VideoExtractor:
         self.metadata = self.downloader.extract_info(url, download = False)
         self.url = url
     
-    def download(self):
-        self.downloader.download([self.url])
+    def download(self) -> bool:
+        is_success = True
+        try:
+            self.downloader.download([self.url])
+        except:
+            is_success = False
+        return is_success
