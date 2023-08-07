@@ -1,6 +1,6 @@
 # Youtube Video Downloader
 
-## Motivation of Development
+## Motivation for Development
 
 My mom has always been a fan of karaoke so she downloads music videos to be saved
 in a flash drive and be played in a car's radio. But the problem is, modern video resolution
