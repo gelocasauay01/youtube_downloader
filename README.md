@@ -16,4 +16,5 @@ then compress it to a compatible resolution for the car's radio.
 ## What I learned
 
 Through this project, I learned how to use the Tkinter GUI Framework. I learned how to make class-based widgets, manually
-threading tasks, and doing simple animations.
+threading tasks, and doing simple animations. I also learned how to implement the observer pattern in the use case of clicking buttons
+and making multiple independent widgets react from it.
