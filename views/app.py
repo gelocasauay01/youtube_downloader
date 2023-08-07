@@ -8,6 +8,8 @@ class App(Window):
         height = size[1]
         self.title(title)
         self.geometry(f"{width}x{height}")
+        self.maxsize(width, height)
+        self.minsize(width, height)
         MainScreen(self).pack(expand = True, fill = 'both')
 
     def run(self):

@@ -1,9 +1,10 @@
 from ttkbootstrap import Frame, Button, Label
 from tkinter import Widget, StringVar
-from views.download_item import DownloadItem
+from views.process_item import ProcessItem
 from time import sleep
 from threading import Thread
-from controller.video_extractor import VideoExtractor
+from controller.video_metadata_extractor import VideoMetadataExtractor
+from controller.video_downloader import VideoDownloader
 from controller.compressor import Compressor
 
 class DownloadsList(Frame):
@@ -15,18 +16,15 @@ class DownloadsList(Frame):
         self.toggle_label = StringVar(self, 'Show All')
         self.no_downloads = Label(self, text = 'No Downloads Yet', anchor = 'center', font = ('Helvetica', 15, 'bold'))
         self.no_downloads.pack(expand = True, fill = 'both')
-        self.toggle = Button(root, textvariable = self.toggle_label, command = self.toggle)
-        self.toggle.place(relheight = 0.05, relwidth = 0.1, relx = 1, rely = 0, anchor = 'ne')
+        self.toggle_button = Button(root, textvariable = self.toggle_label, command = self.toggle)
+        self.toggle_button.place(relheight = 0.05, relwidth = 0.1, relx = 1, rely = 0, anchor = 'ne')
 
-    def add(self, extractor: VideoExtractor):
+    def add(self, extractor: VideoMetadataExtractor):
         if not self.has_downloads:
             self.no_downloads.pack_forget()
-        compressor = Compressor(f'./downloads/{extractor.metadata["title"]}-temp.mp4', f'./downloads/{extractor.metadata["title"]}.avi')
-        item = DownloadItem(self, extractor, compressor)
-        item.pack(padx = 10, pady = 5)
-        Thread(target = item.process_item).start()
+        downloader = VideoDownloader(extractor.url, './downloads', 'mp4', 'temp')
+        ProcessItem(self, extractor, downloader).pack(padx = 10, pady = 5)
         self.has_downloads = True
-
 
     def animate_placement(self, target: float):
         is_increasing = target > self.moving_container_curr_x 
@@ -36,7 +34,6 @@ class DownloadsList(Frame):
             self.place(relwidth = 0.45, relheight = 1, relx = self.moving_container_curr_x, rely = 0.1, anchor = 'ne')
             sleep(0.01)
         
-
     def toggle(self):
         target = 1
         if self.is_toggled:
