@@ -6,6 +6,7 @@ class App(Window):
         super().__init__(themename = 'superhero')
         width = size[0]
         height = size[1]
+        self.iconbitmap('./assets/icon.ico')
         self.title(title)
         self.geometry(f"{width}x{height}")
         self.maxsize(width, height)
